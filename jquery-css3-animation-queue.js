@@ -1,4 +1,20 @@
-/* JavaScript Document */
+/*!
+ * jQuery CSS3 Animation Queue
+ * https://github.com/Richard1320/jQuery-CSS3-Animation-Queue
+ *
+ * Author
+ * Richard Hung
+ * http://www.magicmediamuse.com/
+ *
+ * Version
+ * 1.0.2
+ *
+ * Copyright (c) 2016 Richard Hung.
+ *
+ * License
+ * jQuery CSS3 Animation Queue by Richard Hung is licensed under a MIT License.
+ * http://opensource.org/licenses/MIT
+ */
 
 (function($) {
 	'use strict';
