@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>jQuery CSS3 Animation Queue</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+	<style>
+	/* Required rule. Add to your CSS file */
+	.animated.standby {
+		-webkit-animation: none !important;
+		-o-animation: none !important;
+		animation: none !important;
+		visibility: hidden;
+	}
+	/* Rules for page design */
+	html, body {
+	  padding:0;
+	  margin:0;
+	  text-align:center;
+	}
+	.main-panel {
+	  min-height:100vh;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	}
+	.main-panel:nth-child(even) {
+	  background-color:#ccc;
+	}
+	.col-wrapper {
+	  max-width:500px;
+	  margin:0 auto;
+	}
+	.col-wrapper .col {
+	  display:inline-block;
+	  vertical-align: top;
+	  width:30%;
+	  padding:0 5px;
+	}
+
+	</style>
+</head>
+
+<body>
+
+	<section class="main-panel">
+    <div class="content-block">
+      <h2 class="animated standby fadeInUp">Elements below the fold will not start until you scroll down and they're visibile in the viewport.</h2>
+    </div>
+	</section>
+
+	<section class="main-panel">
+    <div class="content-block">
+      <h2 class="animated standby slideInLeft">This comes in from the left.</h2>
+      <h3 class="animated standby slideInRight">And then this comes in from the right.</h3>
+      <p class="animated standby fadeIn">This element will animate after the one below finishes.</p>
+      <p class="animated standby fadeIn" data-offset="150">This element has a custom offset higher than its previous sibling. This element will animate before its predecessor.</p>
+      <div class="col-wrapper">
+        <div class="col animated standby fadeInUp">Finally, these guys fade up one-at-a-time</div>
+        <div class="col animated standby fadeInUp" data-delay="2000">This has a delay of 2000. The next element will wait two seconds before animating.</div>
+        <div class="col animated standby fadeInUp">Aliquam ut lectus mollis, dictum lacus ut, elementum ex. Curabitur tempus, nisl non laoreet feugiat, mi eros faucibus sem.</div>
+      </div>
+    </div>
+	</section>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="./jquery-css3-animation-queue.js"></script>
+</body>
+</html>

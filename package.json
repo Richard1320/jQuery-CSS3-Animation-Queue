@@ -1,0 +1,31 @@
+{
+  "name": "jquery-css3-animation-queue",
+  "version": "1.0.0",
+  "description": "Queue CSS3 animations to display when browser scrolls down to see element in viewport",
+  "main": "jquery-css3-animation-queue.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Richard1320/jQuery-CSS3-Animation-Queue.git"
+  },
+  "dependencies": {
+    "jquery" : "^1.4"
+  },
+  "keywords": [
+    "jquery",
+    "css",
+    "css3",
+    "transitions",
+    "animation",
+    "animated",
+    "queue"
+  ],
+  "author": "Richard Hung <richardhung111@gmail.com> (http://www.magicmediamuse.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Richard1320/jquery-css3-animation-queue/issues"
+  },
+  "homepage": "https://github.com/Richard1320/jquery-css3-animation-queue#readme"
+}
