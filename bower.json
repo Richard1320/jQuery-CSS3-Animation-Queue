@@ -4,7 +4,7 @@
     "jquery-css3-animation-queue.js",
   ],
   "dependencies": {
-    "jquery": "~1.4",
+    "jquery": "~1.4"
   },
   "ignore": [
     ".*",
