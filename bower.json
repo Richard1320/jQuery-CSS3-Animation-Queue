@@ -1,7 +1,7 @@
 {
   "name": "jquery-css3-animation-queue",
   "main": [
-    "jquery-css3-animation-queue.js",
+    "jquery-css3-animation-queue.js"
   ],
   "dependencies": {
     "jquery": "~1.4"
