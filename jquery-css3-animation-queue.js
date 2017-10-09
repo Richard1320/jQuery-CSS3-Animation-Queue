@@ -8,6 +8,25 @@
 	var transitionObjects = $('.animated.standby'); // All elements to be animated
 	var queueActive       = false; // Check if queue is in process, to not run multiple queues concurrently
 
+	// Sort array by element top including offset
+	var arraySort = function(a,b) {
+		var a_offset = 50;
+		var b_offset = 50;
+		var a_top    = a.offset().top;
+		var b_top    = b.offset().top;
+
+		// Check if elements have custom offset
+		if (a.data('offset')) {
+			a_offset = parseInt(a.data('offset'));
+		}
+		if (b.data('offset')) {
+			b_offset = parseInt(b.data('offset'));
+		}
+
+		// Compare the two animation tops
+		return (a_top - a_offset) - (b_top - b_offset);
+
+	};
 	// Recusive loop to process queue
 	var processQueue = function() {
 		// If queue is not in process and has elements, run one element through animation queue
@@ -55,6 +74,7 @@
 			if (scroll_top + window_height > element_top - offset) {
 				// Add element to animation queue
 				queue.push(element);
+				queue.sort(arraySort);
 
 				// Remove this element from list of waiting animation elements
 				transitionObjects = transitionObjects.not(this);
