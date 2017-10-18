@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.0.2
+ * 1.0.3
  *
  * Copyright (c) 2016 Richard Hung.
  *
@@ -38,6 +38,9 @@
 		if (b.data('offset')) {
 			b_offset = parseInt(b.data('offset'));
 		}
+
+		// Artificially push one pixel down for the next item to prevent same line items from having random order
+		b_offset--;
 
 		// Compare the two animation tops
 		return (a_top - a_offset) - (b_top - b_offset);
