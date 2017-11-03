@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.0.3
+ * 1.0.4
  *
  * Copyright (c) 2016 Richard Hung.
  *
@@ -139,5 +139,16 @@
 		addToQueue();
 		processQueue();
 	});
+
+	$.fn.jqueryCss3AnimationQueue = function(method) {
+		switch (method) {
+			case 'update':
+				transitionObjects = $('.animated.standby');
+				queue = [];
+				addToQueue();
+				processQueue();
+			break;
+		}
+	}
 
 })(jQuery);
