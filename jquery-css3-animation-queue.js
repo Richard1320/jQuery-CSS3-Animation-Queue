@@ -19,13 +19,14 @@
 (function($) {
 	'use strict';
 
-	// Transitions
+	// Global Variables
 	var queue             = []; // Queue of elements that have reached animation break point
 	var transitionObjects = $('.animated.standby'); // All elements to be animated
 	var queueActive       = false; // Check if queue is in process, to not run multiple queues concurrently
+	var methods           = {}; // Plugin methods
 
 	// Sort array by element top including offset
-	var arraySort = function(a,b) {
+	methods.arraySort = function(a,b) {
 		var a_offset = 50;
 		var b_offset = 50;
 		var a_top    = a.offset().top;
@@ -47,7 +48,7 @@
 
 	};
 	// Recusive loop to process queue
-	var processQueue = function() {
+	methods.processQueue = function() {
 		// If queue is not in process and has elements, run one element through animation queue
 		if (!queueActive && queue.length) {
 			queueActive = true;
@@ -69,12 +70,12 @@
 			// Wait and run queue again
 			setTimeout(function() {
 				queueActive = false;
-				processQueue();
+				$.fn.jqueryCss3AnimationQueue('processQueue');
 			},delay);
 
 		}
 	};
-	var addToQueue = function() {
+	methods.addToQueue = function() {
 		var scroll_top    = $(window).scrollTop();
 		var window_height = $(window).height();
 
@@ -93,7 +94,7 @@
 			if (scroll_top + window_height > element_top - offset) {
 				// Add element to animation queue
 				queue.push(element);
-				queue.sort(arraySort);
+				// queue.sort(arraySort);
 
 				// Remove this element from list of waiting animation elements
 				transitionObjects = transitionObjects.not(this);
@@ -102,7 +103,7 @@
 	};
 
 	// Animate all elements above fold immediately without adding to queue
-	var immediateAnimation = function(scroll_top) {
+	methods.immediateAnimation = function(scroll_top) {
 		// Check if a position top is passed
 		if (!scroll_top) {
 			scroll_top = $(window).scrollTop();
@@ -124,31 +125,41 @@
 		});
 	};
 
+	// Update queue with new animatable elements
+	methods.update = function() {
+		transitionObjects = $('.animated.standby');
+		queue = [];
+		$.fn.jqueryCss3AnimationQueue('addToQueue');
+		$.fn.jqueryCss3AnimationQueue('processQueue');
+	}
+	$.fn.jqueryCss3AnimationQueue = function(method) {
+
+		if ( methods[method] ) {
+			return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
+		} else if ( typeof method === 'object' || ! method ) {
+			return methods.init.apply( this, arguments );
+		} else {
+			$.error( 'Method ' +  method + ' does not exist on jQuery.jqueryCss3AnimationQueue' );
+		}
+
+	}; // End plugin
+
+	/*
 	$(window).on('load',function() {
 		// Cache all animated elements
 		transitionObjects = $('.animated.standby');
 
 		// Run once for elements above fold
-		immediateAnimation();
+		$.fn.jqueryCss3AnimationQueue('immediateAnimation');
 
-		addToQueue();
-		processQueue();
+		$.fn.jqueryCss3AnimationQueue('addToQueue');
+		$.fn.jqueryCss3AnimationQueue('processQueue');
 
 	}); // End window ready
+	*/
 	$(window).scroll(function() {
-		addToQueue();
-		processQueue();
+		$.fn.jqueryCss3AnimationQueue('addToQueue');
+		$.fn.jqueryCss3AnimationQueue('processQueue');
 	});
-
-	$.fn.jqueryCss3AnimationQueue = function(method) {
-		switch (method) {
-			case 'update':
-				transitionObjects = $('.animated.standby');
-				queue = [];
-				addToQueue();
-				processQueue();
-			break;
-		}
-	}
 
 })(jQuery);
