@@ -50,6 +50,8 @@ Full example:
 
 ## Advanced Usage
 
+### Options
+
 The plugin reads the data properties `delay` and `offset` on each element.
 
 The `delay` property determines how much time to wait before animating the next element in the queue. If unset, defaults to `500` milliseconds. This is separate to the actual CSS animation duration and may contain a different value.
@@ -61,5 +63,17 @@ The `offset` property determines how much space between the bottom of the browse
 ```html
 <div class="animated standby fadeIn" data-offset="200">This element will be added to the animation queue when the space between the bottom of the browser and the top of the element is more than 200 pixels.</div>
 ```
+
+### Methods
+
+The plugin comes with several methods that you can call manually from outside the plugin. The most common one is `update`.
+
+The plugin caches all animated elements on document ready in order to improve performance. The `update` method will clear the animation queue and reacquire elements with the classes `animated` and `standby`.
+
+```
+$('.newly_added_div').addClass('animated standby fadeIn');
+$.fn.jqueryCss3AnimationQueue('update');
+```
+
 ## License
 jQuery CSS3 Animation Queue is licensed under the MIT license. (http://opensource.org/licenses/MIT)
