@@ -26,7 +26,7 @@
 	var methods           = {}; // Plugin methods
 
 	// Sort array by element top including offset
-	methods.arraySort = function(a,b) {
+	methods.sortByOffsetTop = function(a,b) {
 		var a_offset = 50;
 		var b_offset = 50;
 		var a_top    = a.offset().top;
@@ -70,7 +70,7 @@
 			// Wait and run queue again
 			setTimeout(function() {
 				queueActive = false;
-				$.fn.jqueryCss3AnimationQueue('processQueue');
+				methods.processQueue();
 			},delay);
 
 		}
@@ -78,6 +78,7 @@
 	methods.addToQueue = function() {
 		var scroll_top    = $(window).scrollTop();
 		var window_height = $(window).height();
+		var apply_sort    = false;
 
 		// Loop through list of elements waiting for animation
 		transitionObjects.each(function() {
@@ -94,12 +95,16 @@
 			if (scroll_top + window_height > element_top - offset) {
 				// Add element to animation queue
 				queue.push(element);
-				// queue.sort(arraySort);
 
 				// Remove this element from list of waiting animation elements
 				transitionObjects = transitionObjects.not(this);
+
+				apply_sort = true;
 			}
 		});
+		if (apply_sort) {
+			queue.sort(methods.sortByOffsetTop);
+		}
 	};
 
 	// Animate all elements above fold immediately without adding to queue
@@ -129,9 +134,11 @@
 	methods.update = function() {
 		transitionObjects = $('.animated.standby');
 		queue = [];
-		$.fn.jqueryCss3AnimationQueue('addToQueue');
-		$.fn.jqueryCss3AnimationQueue('processQueue');
+		methods.addToQueue();
+		methods.processQueue();
+
 	}
+
 	$.fn.jqueryCss3AnimationQueue = function(method) {
 
 		if ( methods[method] ) {
@@ -144,22 +151,20 @@
 
 	}; // End plugin
 
-	/*
-	$(window).on('load',function() {
+	$(document).ready(function() {
 		// Cache all animated elements
 		transitionObjects = $('.animated.standby');
 
 		// Run once for elements above fold
-		$.fn.jqueryCss3AnimationQueue('immediateAnimation');
+		methods.immediateAnimation();
 
-		$.fn.jqueryCss3AnimationQueue('addToQueue');
-		$.fn.jqueryCss3AnimationQueue('processQueue');
+		methods.addToQueue();
+		methods.processQueue();
+	}); // end document ready
 
-	}); // End window ready
-	*/
 	$(window).scroll(function() {
-		$.fn.jqueryCss3AnimationQueue('addToQueue');
-		$.fn.jqueryCss3AnimationQueue('processQueue');
+		methods.addToQueue();
+		methods.processQueue();
 	});
 
 })(jQuery);
