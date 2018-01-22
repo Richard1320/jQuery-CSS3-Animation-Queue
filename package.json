@@ -11,7 +11,7 @@
     "url": "git@github.com:Richard1320/jQuery-CSS3-Animation-Queue.git"
   },
   "dependencies": {
-    "jquery" : "^1.4"
+    "jquery" : "^3.0.0"
   },
   "keywords": [
     "jquery",
