@@ -7,9 +7,9 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.0.4
+ * 1.0.5
  *
- * Copyright (c) 2016 Richard Hung.
+ * Copyright (c) 2018 Richard Hung.
  *
  * License
  * jQuery CSS3 Animation Queue by Richard Hung is licensed under a MIT License.
@@ -82,9 +82,10 @@
 
 		// Loop through list of elements waiting for animation
 		transitionObjects.each(function() {
-			var element     = $(this);
-			var element_top = element.offset().top;
-			var offset      = 50; // Space between the top of the element and bottom of browser before element is added to active animation queue
+			var element       = $(this);
+			var element_top   = element.offset().top;
+			var offset        = 50; // Space between the top of the element and bottom of browser before element is added to active animation queue
+			var window_bottom = scroll_top + window_height;
 
 			// Check if element has custom offset
 			if (element.data('offset')) {
@@ -92,7 +93,7 @@
 			}
 
 			// Check if browser scroll is at break point
-			if (scroll_top + window_height > element_top - offset) {
+			if (window_bottom > element_top + offset) {
 				// Add element to animation queue
 				queue.push(element);
 
