@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.0.5
+ * 1.0.6
  *
  * Copyright (c) 2018 Richard Hung.
  *
@@ -19,7 +19,16 @@
 (function($) {
 	'use strict';
 
+
 	// Global Variables
+	if (!window.jqueryCss3AnimationQueue) window.jqueryCss3AnimationQueue = {};
+	if (!window.jqueryCss3AnimationQueue.settings) window.jqueryCss3AnimationQueue.settings = {};
+	// Time to wait before triggering the next element in queue
+	if (!window.jqueryCss3AnimationQueue.settings.delay) window.jqueryCss3AnimationQueue.settings.delay = 500;
+	// Space between the top of the element and bottom of browser before element is added to active animation queue
+	if (!window.jqueryCss3AnimationQueue.settings.offset) window.jqueryCss3AnimationQueue.settings.offset = 150;
+	// Attempt to sort queue by position top of each element rather than position in DOM
+	if (typeof window.jqueryCss3AnimationQueue.settings.applySort === 'undefined') window.jqueryCss3AnimationQueue.settings.applySort = true;
 	var queue             = []; // Queue of elements that have reached animation break point
 	var transitionObjects = $('.animated.standby'); // All elements to be animated
 	var queueActive       = false; // Check if queue is in process, to not run multiple queues concurrently
@@ -27,8 +36,8 @@
 
 	// Sort array by element top including offset
 	methods.sortByOffsetTop = function(a,b) {
-		var a_offset = 50;
-		var b_offset = 50;
+		var a_offset = window.jqueryCss3AnimationQueue.settings.offset;
+		var b_offset = window.jqueryCss3AnimationQueue.settings.offset;
 		var a_top    = a.offset().top;
 		var b_top    = b.offset().top;
 
@@ -40,8 +49,8 @@
 			b_offset = parseInt(b.data('offset'));
 		}
 
-		// Artificially push one pixel down for the next item to prevent same line items from having random order
-		b_offset--;
+		// Artificially push few pixels down for the next item to prevent same line items from having random order
+		b_offset = b_offset - 5;
 
 		// Compare the two animation tops
 		return (a_top - a_offset) - (b_top - b_offset);
@@ -54,7 +63,7 @@
 			queueActive = true;
 
 			// Set default delay
-			var delay = 500;
+			var delay = window.jqueryCss3AnimationQueue.settings.delay;
 
 			// Shift the first element out of queue
 			var first_element = queue.shift();
@@ -78,13 +87,13 @@
 	methods.addToQueue = function() {
 		var scroll_top    = $(window).scrollTop();
 		var window_height = $(window).height();
-		var apply_sort    = false;
+		var queue_updated = false;
 
 		// Loop through list of elements waiting for animation
 		transitionObjects.each(function() {
 			var element       = $(this);
 			var element_top   = element.offset().top;
-			var offset        = 50; // Space between the top of the element and bottom of browser before element is added to active animation queue
+			var offset        = window.jqueryCss3AnimationQueue.settings.offset;
 			var window_bottom = scroll_top + window_height;
 
 			// Check if element has custom offset
@@ -100,10 +109,10 @@
 				// Remove this element from list of waiting animation elements
 				transitionObjects = transitionObjects.not(this);
 
-				apply_sort = true;
+				queue_updated = true;
 			}
 		});
-		if (apply_sort) {
+		if (queue_updated && window.jqueryCss3AnimationQueue.settings.applySort) {
 			queue.sort(methods.sortByOffsetTop);
 		}
 	};
