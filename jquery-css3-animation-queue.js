@@ -147,7 +147,7 @@
 		methods.addToQueue();
 		methods.processQueue();
 
-	}
+	}; // End update
 
 	$.fn.jqueryCss3AnimationQueue = function(method) {
 
