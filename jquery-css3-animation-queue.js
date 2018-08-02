@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.0.6
+ * 1.0.7
  *
  * Copyright (c) 2018 Richard Hung.
  *
@@ -38,8 +38,10 @@
 	methods.sortByOffsetTop = function(a,b) {
 		var a_offset = window.jqueryCss3AnimationQueue.settings.offset;
 		var b_offset = window.jqueryCss3AnimationQueue.settings.offset;
-		var a_top    = a.offset().top;
+    var a_top    = a.offset().top;
+    var a_left   = a.offset().left;
 		var b_top    = b.offset().top;
+		var b_left   = b.offset().left;
 
 		// Check if elements have custom offset
 		if (a.data('offset')) {
@@ -49,8 +51,12 @@
 			b_offset = parseInt(b.data('offset'));
 		}
 
-		// Artificially push few pixels down for the next item to prevent same line items from having random order
-		b_offset = b_offset - 5;
+    // Artificially push few pixels down for the next item to prevent same line items from having random order
+    if (a_left < b_left) { // If "a" is to the "left" of "b"
+      b_offset = b_offset - 5;
+    } else if (b_left < a_left) { // If "b" is to the "left" of "a"
+      a_offset = a_offset - 5;
+    }
 
 		// Compare the two animation tops
 		return (a_top - a_offset) - (b_top - b_offset);
