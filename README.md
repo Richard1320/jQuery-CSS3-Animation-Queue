@@ -97,6 +97,8 @@ window.jqueryCss3AnimationQueue.settings.applySort = false;
 
 ## Methods
 
+### Load New Elements
+
 The plugin comes with several methods that you can call manually from outside the plugin. The most common one is `update`.
 
 The plugin caches all animated elements on document ready in order to improve performance. The `update` method will clear the animation queue and reacquire elements with the classes `animated` and `standby`.
@@ -104,6 +106,16 @@ The plugin caches all animated elements on document ready in order to improve pe
 ```javascript
 $('.newly_added_div').addClass('animated standby fadeIn');
 $.fn.jqueryCss3AnimationQueue('update');
+```
+
+### Immediate Animation
+
+Sometimes the animation might take too long to reach the user as they might be starting in the middle of a page. The `immediateAnimation` method will trigger the animation immediately for all elements above a certain point. 
+
+```javascript
+// Immediately trigger items above fold
+var scrollTop = $(window).scrollTop();
+$.fn.jqueryCss3AnimationQueue('immediateAnimation', scrollTop);
 ```
 
 ## License
