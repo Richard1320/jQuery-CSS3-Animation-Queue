@@ -95,6 +95,26 @@ You can disable the sort function in your JavaScript. Due to this setting affect
 window.jqueryCss3AnimationQueue.settings.applySort = false;
 ```
 
+### Immediate Animation on elements above fold
+
+Default value: `true`
+
+If the user starts in the middle of a page or scrolls quickly to the bottom, the plugin might take a long time to reach elements in their viewport. 
+
+By default, when the page loads and when the user scrolls, the plugin will immediately trigger the elements above the fold. This feature can be disabled if you decide that the plugin is triggering elements too quickly.
+
+```javascript
+window.jqueryCss3AnimationQueue.settings.triggerViewport = false;
+```
+
+You can also manually trigger the all elements above a certain point on the page.
+
+```javascript
+// Immediately trigger items above fold
+var scrollTop = $(window).scrollTop();
+$.fn.jqueryCss3AnimationQueue('immediateAnimation', scrollTop);
+```
+
 ## Methods
 
 ### Load New Elements
@@ -106,16 +126,6 @@ The plugin caches all animated elements on document ready in order to improve pe
 ```javascript
 $('.newly_added_div').addClass('animated standby fadeIn');
 $.fn.jqueryCss3AnimationQueue('update');
-```
-
-### Immediate Animation
-
-Sometimes the animation might take too long to reach the user as they might be starting in the middle of a page. The `immediateAnimation` method will trigger the animation immediately for all elements above a certain point. 
-
-```javascript
-// Immediately trigger items above fold
-var scrollTop = $(window).scrollTop();
-$.fn.jqueryCss3AnimationQueue('immediateAnimation', scrollTop);
 ```
 
 ## License
