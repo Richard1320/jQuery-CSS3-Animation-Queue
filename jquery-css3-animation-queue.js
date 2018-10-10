@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.0.7
+ * 1.0.8
  *
  * Copyright (c) 2018 Richard Hung.
  *
@@ -29,6 +29,9 @@
 	if (!window.jqueryCss3AnimationQueue.settings.offset) window.jqueryCss3AnimationQueue.settings.offset = 150;
 	// Attempt to sort queue by position top of each element rather than position in DOM
 	if (typeof window.jqueryCss3AnimationQueue.settings.applySort === 'undefined') window.jqueryCss3AnimationQueue.settings.applySort = true;
+	// Immediately trigger all items above the viewport to prevent delays
+  if (typeof window.jqueryCss3AnimationQueue.settings.triggerViewport === 'undefined') window.jqueryCss3AnimationQueue.settings.triggerViewport = true;
+  var $window           = $(window); // Cached window variable
 	var queue             = []; // Queue of elements that have reached animation break point
 	var transitionObjects = $('.animated.standby'); // All elements to be animated
 	var queueActive       = false; // Check if queue is in process, to not run multiple queues concurrently
@@ -91,8 +94,8 @@
 		}
 	};
 	methods.addToQueue = function() {
-		var scroll_top    = $(window).scrollTop();
-		var window_height = $(window).height();
+		var scroll_top    = $window.scrollTop();
+		var window_height = $window.height();
 		var queue_updated = false;
 
 		// Loop through list of elements waiting for animation
@@ -127,7 +130,7 @@
 	methods.immediateAnimation = function(scroll_top) {
 		// Check if a position top is passed
 		if (!scroll_top) {
-			scroll_top = $(window).scrollTop();
+			scroll_top = $window.scrollTop();
 		}
 
 		// Loop through list of elements waiting for animation
@@ -171,14 +174,21 @@
 		// Cache all animated elements
 		transitionObjects = $('.animated.standby');
 
-		// Run once for elements above fold
-		methods.immediateAnimation();
+    // Run once for elements above fold
+    if (window.jqueryCss3AnimationQueue.settings.triggerViewport) {
+      methods.immediateAnimation();
+    }
 
 		methods.addToQueue();
 		methods.processQueue();
 	}); // end document ready
 
-	$(window).scroll(function() {
+	$window.scroll(function() {
+    // Automatically trigger items above viewport
+    if (window.jqueryCss3AnimationQueue.settings.triggerViewport) {
+      methods.immediateAnimation();
+    }
+    
 		methods.addToQueue();
 		methods.processQueue();
 	});
