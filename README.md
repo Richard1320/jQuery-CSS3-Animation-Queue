@@ -4,12 +4,7 @@ jQuery CSS3 animation queue is a plugin to chain CSS3 animations one at a time, 
 
 ## Installation
 
-To install via Bower, simply do the following:
-
-```bash
-$ bower install jquery-css3-animation-queue --save
-```
-or you can install via npm:
+To install via npm:
 
 ```bash
 $ npm install jquery-css3-animation-queue --save
