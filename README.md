@@ -49,7 +49,7 @@ The plugin reads the data properties `delay` and `offset` on each element.
 
 ### Delay
 
-Default value: `500`
+Default value: `300`
 
 The `delay` property determines how much time to wait, in milliseconds, before animating the next element in the queue. This is separate to the actual CSS animation duration and may contain a different value.
 

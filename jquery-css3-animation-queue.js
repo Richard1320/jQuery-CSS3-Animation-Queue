@@ -25,7 +25,7 @@
     window.jqueryCss3AnimationQueue.settings = {};
   // Time to wait before triggering the next element in queue
   if (!window.jqueryCss3AnimationQueue.settings.delay)
-    window.jqueryCss3AnimationQueue.settings.delay = 500;
+    window.jqueryCss3AnimationQueue.settings.delay = 300;
   // Space between the top of the element and bottom of browser before element is added to active animation queue
   if (!window.jqueryCss3AnimationQueue.settings.offset)
     window.jqueryCss3AnimationQueue.settings.offset = 150;
