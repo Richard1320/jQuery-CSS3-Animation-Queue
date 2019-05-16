@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.0.9
+ * 1.1.0
  *
  * Copyright (c) 2018 Richard Hung.
  *
@@ -85,8 +85,8 @@
       // Shift the first element out of queue
       var first_element = queue.shift();
 
-      // Animate element
-      first_element.removeClass('standby');
+      // Animate element and trigger event listener
+      first_element.removeClass('standby').trigger('animationQueue');
 
       // Check if element has custom delay
       if (first_element.data('delay')) {
@@ -167,7 +167,7 @@
     if (methods[method]) {
       return methods[method].apply(
         this,
-        Array.prototype.slice.call(arguments, 1),
+        Array.prototype.slice.call(arguments, 1)
       );
     } else if (typeof method === 'object' || !method) {
       return methods.init.apply(this, arguments);
@@ -175,7 +175,7 @@
       $.error(
         'Method ' +
           method +
-          ' does not exist on jQuery.jqueryCss3AnimationQueue',
+          ' does not exist on jQuery.jqueryCss3AnimationQueue'
       );
     }
   }; // End plugin
